@@ -21,7 +21,7 @@ Bootstraped by [create-react-app](https://github.com/facebook/create-react-app) 
 * Airbnb's Eslint
 * Prettier
 
-## Mobile
+## Mobile - React-Native
 
 Bootstraped by [react-native init](https://github.com/react-native-community/cli#using-npx-recommended) using:
 
