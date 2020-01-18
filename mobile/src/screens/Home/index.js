@@ -1,9 +1,20 @@
-import React, { memo } from 'react';
+import React, { useEffect, memo } from 'react';
+import Geolocation from '@react-native-community/geolocation';
 
-import { Text } from 'react-native';
+import { Map } from './styles';
 
 const Home = () => {
-  return <Text>Hello World</Text>;
+  useEffect(() => {
+    const test = Geolocation.requestAuthorization();
+    // console.log(test);
+    Geolocation.getCurrentPosition(
+      info => console.log(info),
+      error => console.log(error),
+      { enableHighAccuracy: true }
+    );
+  }, []);
+
+  return <Map />;
 };
 
 export default memo(Home);
