@@ -29,7 +29,8 @@ export const DevBio = styled(Text)({
 });
 
 export const DevTechs = styled(Text)({
-  marginTop: 5
+  marginTop: 5,
+  fontWeight: 'bold'
 });
 
 export const SearchForm = styled(View)({

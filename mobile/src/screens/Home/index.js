@@ -1,7 +1,8 @@
 import React, { useEffect, memo, useState } from 'react';
+import { ActivityIndicator, Text } from 'react-native';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Geolocation from '@react-native-community/geolocation';
-import { ActivityIndicator, Text } from 'react-native';
 import { Marker, Callout } from 'react-native-maps';
 
 import api from '../../services/api';
@@ -99,7 +100,7 @@ const Home = ({ navigation }) => {
           onChangeText={setTechs}
         />
         <SearchButton onPress={loadDevs}>
-          <Text>Search</Text>
+          <FontAwesome5 name="location-arrow" color="#fff" size={16} />
         </SearchButton>
       </SearchForm>
     </KeyboardAwareScrollView>
