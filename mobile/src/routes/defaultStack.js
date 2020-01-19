@@ -20,10 +20,12 @@ const defaultStack = () => {
           },
           headerTitleStyle: {
             color: '#fff'
-          }
+          },
+          headerBackTitleVisible: false,
+          headerTintColor: '#fff'
         }}
       >
-        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Home" component={Home} options={{ headerTitle: 'DevRadar' }} />
         <Stack.Screen name="Profile" component={Profile} />
       </Stack.Navigator>
     </NavigationNativeContainer>
