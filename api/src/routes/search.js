@@ -14,11 +14,9 @@ router.get('/search', async (req, res) => {
   }
 
   const devs = await Dev.find({
-    ...(techs.length > 0 && {
-      techs: {
-        $in: techs
-      }
-    }),
+    techs: {
+      $in: techs
+    },
     location: {
       $near: {
         $geometry: {

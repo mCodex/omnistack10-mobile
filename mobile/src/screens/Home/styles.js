@@ -1,4 +1,4 @@
-import { View, Image, Text } from 'react-native';
+import { View, Image, Text, TextInput } from 'react-native';
 import MapView from 'react-native-maps';
 import styled from 'styled-components';
 
@@ -30,4 +30,26 @@ export const DevBio = styled(Text)({
 
 export const DevTechs = styled(Text)({
   marginTop: 5
+});
+
+export const SearchForm = styled(View)({
+  position: 'absolute',
+  bottom: 20,
+  left: 20,
+  right: 20,
+  zIndex: 5,
+  flexDirection: 'row'
+});
+
+export const SearchInput = styled(TextInput)({
+  flex: 1,
+  height: 50,
+  backgroundColor: '#fff',
+  color: '#333',
+  borderRadius: 25,
+  paddingHorizontal: 20,
+  fontSize: 16,
+  boxShadow: '4px 4px #000',
+  shadowOpacity: 0.2,
+  elevation: 1
 });
