@@ -1,7 +1,7 @@
-import React, { useEffect, memo, useState, useCallback } from 'react';
+import React, { useEffect, memo, useState } from 'react';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Geolocation from '@react-native-community/geolocation';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, Text } from 'react-native';
 import { Marker, Callout } from 'react-native-maps';
 
 import api from '../../services/api';
@@ -14,25 +14,27 @@ import {
   DevBio,
   DevTechs,
   SearchForm,
-  SearchInput
+  SearchInput,
+  SearchButton
 } from './styles';
 
 const Home = ({ navigation }) => {
   const [currentRegion, setCurrentRegion] = useState();
   const [devs, setDevs] = useState([]);
+  const [techs, setTechs] = useState('');
 
-  const loadDevs = useCallback(async () => {
+  const loadDevs = async () => {
     const { latitude, longitude } = currentRegion;
     const { data } = await api.get('search', {
       params: {
         latitude,
         longitude,
-        techs: 'React'
+        techs
       }
     });
 
     return setDevs(data);
-  }, [currentRegion]);
+  };
 
   useEffect(() => {
     Geolocation.getCurrentPosition(
@@ -50,13 +52,6 @@ const Home = ({ navigation }) => {
       { enableHighAccuracy: true }
     );
   }, []);
-
-  useEffect(() => {
-    if (!currentRegion) {
-      return;
-    }
-    loadDevs();
-  }, [currentRegion]); //eslint-disable-line
 
   const handleRegionChanged = region => {
     return setCurrentRegion(region);
@@ -100,7 +95,12 @@ const Home = ({ navigation }) => {
           placeholderTextColor="#999"
           autoCapitalize="words"
           autoCorrect={false}
+          value={techs}
+          onChangeText={setTechs}
         />
+        <SearchButton onPress={loadDevs}>
+          <Text>Search</Text>
+        </SearchButton>
       </SearchForm>
     </KeyboardAwareScrollView>
   );

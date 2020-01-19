@@ -1,4 +1,4 @@
-import { View, Image, Text, TextInput } from 'react-native';
+import { View, Image, Text, TextInput, TouchableOpacity } from 'react-native';
 import MapView from 'react-native-maps';
 import styled from 'styled-components';
 
@@ -52,4 +52,14 @@ export const SearchInput = styled(TextInput)({
   boxShadow: '4px 4px #000',
   shadowOpacity: 0.2,
   elevation: 1
+});
+
+export const SearchButton = styled(TouchableOpacity)({
+  width: 50,
+  height: 50,
+  backgroundColor: '#8E4Dff',
+  borderRadius: 25,
+  justifyContent: 'center',
+  alignItems: 'center',
+  marginLeft: 15
 });
