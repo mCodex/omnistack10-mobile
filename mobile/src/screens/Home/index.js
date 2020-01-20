@@ -1,11 +1,12 @@
 import React, { useEffect, memo, useState } from 'react';
-import { ActivityIndicator, Text } from 'react-native';
+import { ActivityIndicator } from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import Geolocation from '@react-native-community/geolocation';
 import { Marker, Callout } from 'react-native-maps';
 
 import api from '../../services/api';
+import { connect, disconnect, subscribeToNewDevs } from '../../services/socket';
 
 import {
   Map,
@@ -22,7 +23,14 @@ import {
 const Home = ({ navigation }) => {
   const [currentRegion, setCurrentRegion] = useState();
   const [devs, setDevs] = useState([]);
-  const [techs, setTechs] = useState('');
+  const [techsInput, setTechsInput] = useState('');
+
+  const setupWebSocket = () => {
+    disconnect();
+
+    const { latitude, longitude } = currentRegion;
+    return connect(latitude, longitude, techsInput);
+  };
 
   const loadDevs = async () => {
     const { latitude, longitude } = currentRegion;
@@ -30,11 +38,12 @@ const Home = ({ navigation }) => {
       params: {
         latitude,
         longitude,
-        techs
+        techs: techsInput
       }
     });
 
-    return setDevs(data);
+    setDevs(data);
+    return setupWebSocket();
   };
 
   useEffect(() => {
@@ -53,6 +62,10 @@ const Home = ({ navigation }) => {
       { enableHighAccuracy: true }
     );
   }, []);
+
+  useEffect(() => {
+    subscribeToNewDevs(dev => setDevs([...devs, dev]));
+  }, [devs]);
 
   const handleRegionChanged = region => {
     return setCurrentRegion(region);
@@ -96,8 +109,8 @@ const Home = ({ navigation }) => {
           placeholderTextColor="#999"
           autoCapitalize="words"
           autoCorrect={false}
-          value={techs}
-          onChangeText={setTechs}
+          value={techsInput}
+          onChangeText={setTechsInput}
         />
         <SearchButton onPress={loadDevs}>
           <FontAwesome5 name="location-arrow" color="#fff" size={16} />

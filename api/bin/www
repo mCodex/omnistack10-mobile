@@ -5,6 +5,8 @@
  */
 
 const app = require('../src');
+const { setupWebSocket } = require('../src/websocket');
+
 const debug = require('debug')('omnistack10-api:server');
 const http = require('http');
 
@@ -20,6 +22,7 @@ app.set('port', port);
  */
 
 const server = http.createServer(app);
+setupWebSocket(server);
 
 /**
  * Listen on provided port, on all network interfaces.

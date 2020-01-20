@@ -5,6 +5,8 @@ const Dev = require('../models/dev');
 
 const parseStringToArray = require('../utils/parseStringToArray');
 
+const { findConnections, sendMessage } = require('../websocket');
+
 const router = Router();
 
 router.get('/devs', async (req, res) => {
@@ -39,6 +41,11 @@ router.post('/devs', async (req, res) => {
       techs: techsArray,
       location
     });
+
+    // Filtering websocket connections
+    const sendSocketMessageTo = findConnections({ latitude, longitude }, techsArray);
+
+    sendMessage(sendSocketMessageTo, 'newDev', savedDev);
 
     return res.json(savedDev);
   } catch (ex) {
